@@ -1,8 +1,18 @@
 from django.urls import path
 
-from cats.views import CatDetail, CatList
+from cats.views import CatViewSet
 
 urlpatterns = [
-    path('cats/', CatList.as_view()),
-    path('cats/<int:pk>/', CatDetail.as_view()),
+    path('cats/', CatViewSet.as_view({'get': 'list', 'post': 'create'})),
+    path(
+        'cats/<int:pk>/',
+        CatViewSet.as_view(
+            {
+                'get': 'retrieve',
+                'put': 'update',
+                'patch': 'partial_update',
+                'delete': 'destroy',
+            }
+        ),
+    ),
 ]
